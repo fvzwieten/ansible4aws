@@ -15,6 +15,7 @@
       group: "test"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
+      region: "us-east-2"
       wait: true
 #      exact_count: 1
 #      count_tag:
