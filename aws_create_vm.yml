@@ -12,7 +12,7 @@
       aws_secret_key: "{{ aws_secret_access_key }}"
       key_name: "fred"
       id: "{{ vm_name }}"
-      group: "test"
+#      group: "test"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
       region: "us-east-2"
