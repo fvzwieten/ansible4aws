@@ -10,14 +10,15 @@
     ec2:
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-      key_name: files/aws_fred.pem
-      group: test
+      key_name: mykey
+      id: "{{ vm_name }}"
+      group: "test"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
       wait: true
-      exact_count: 1
-      count_tag:
-      Name: "{ vm_name }}"
-      instance_tags:
-      Name: "{{ vm_name }}"
+#      exact_count: 1
+#      count_tag:
+#        Name: "{ vm_name }}"
+#      instance_tags:
+#        Name: "{{ vm_name }}"
     register: ec2
