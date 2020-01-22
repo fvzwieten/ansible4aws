@@ -22,5 +22,5 @@
 #        Name: "{ vm_name }}"
       instance_tags:
         Name: "{{ vm_name }}"
-      user_data: ""
+      user_data: "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fvzwieten/ansible4gcp/master/scripts/sysprep.ps1'))"
     register: ec2
