@@ -20,6 +20,6 @@
 #      exact_count: 1
 #      count_tag:
 #        Name: "{ vm_name }}"
-#      instance_tags:
-#        Name: "{{ vm_name }}"
+      instance_tags:
+        Name: "{{ vm_name }}"
     register: ec2
