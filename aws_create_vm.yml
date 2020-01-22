@@ -22,4 +22,5 @@
 #        Name: "{ vm_name }}"
       instance_tags:
         Name: "{{ vm_name }}"
+      user_data: ""
     register: ec2
