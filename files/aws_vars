@@ -1,0 +1,6 @@
+---
+# env vars come from credential when using Tower or manual set env vars when using ansible-playbook
+# example of using the lookup construct to get environment vars and use them.
+aws_access_key_id: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+aws_secret_access_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+aws_security_token: "{{ lookup('env','AWS_SECURITY_TOKEN') }}"
