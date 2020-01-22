@@ -4,7 +4,6 @@
   gather_facts: no
   vars_files:
   - files/aws_vars
-  - files/aws_key
 
   tasks:
   - name: Provision a set of instances
