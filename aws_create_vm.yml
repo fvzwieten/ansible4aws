@@ -12,7 +12,6 @@
       description: sg with rule descriptions
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-      key_name: "fred"
 #      vpc_id: vpc-xxxxxxxx
 #      profile: "{{ aws_profile }}"
       region: "us-east-2"
