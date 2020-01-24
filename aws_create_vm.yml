@@ -22,5 +22,6 @@
 #        Name: "{ vm_name }}"
       instance_tags:
         Name: "{{ vm_name }}"
-      user_data: "<powershell>\niex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fvzwieten/ansible4gcp/master/scripts/sysprep.ps1'))\n</powershell>"
+      user_data: "{{ lookup('file', 'files/sysprep') }}"
+#      user_data: "<powershell>\niex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fvzwieten/ansible4gcp/master/scripts/sysprep.ps1'))\n</powershell>"
     register: ec2
