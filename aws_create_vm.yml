@@ -6,22 +6,35 @@
   - files/aws_vars
 
   tasks:
+  - name: Set up Security Group
+    ec2_group:
+      name: "mySecGrp"
+      description: sg with rule descriptions
+      aws_access_key: "{{ aws_access_key_id }}"
+      aws_secret_key: "{{ aws_secret_access_key }}"
+      key_name: "fred"
+#      vpc_id: vpc-xxxxxxxx
+#      profile: "{{ aws_profile }}"
+      region: "us-east-2"
+      rules:
+      - proto: tcp
+        ports:
+        - 5986
+        cidr_ip: 0.0.0.0/0
+        rule_desc: allow all on WinRM-HTTPS
+ 
   - name: Provision a set of instances
     ec2:
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
       key_name: "fred"
       id: "{{ vm_name }}"
-#      group: "test"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
       region: "us-east-2"
+      group: "MySecGrp"
       wait: true
-#      exact_count: 1
-#      count_tag:
-#        Name: "{ vm_name }}"
       instance_tags:
         Name: "{{ vm_name }}"
       user_data: "{{ lookup('file', 'files/sysprep') }}"
-#      user_data: "<powershell>\niex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/fvzwieten/ansible4gcp/master/scripts/sysprep.ps1'))\n</powershell>"
     register: ec2
