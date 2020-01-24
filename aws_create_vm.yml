@@ -8,7 +8,7 @@
   tasks:
   - name: Set up Security Group
     ec2_group:
-      name: "mySecGrp"
+      name: "mysecgrp"
       description: sg with rule descriptions
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
@@ -31,7 +31,7 @@
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
       region: "us-east-2"
-      group: "MySecGrp"
+      group: "mysecgrp"
       wait: true
       instance_tags:
         Name: "{{ vm_name }}"
