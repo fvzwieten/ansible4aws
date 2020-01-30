@@ -50,6 +50,7 @@
       instance_id: {{ ec2.instance_id }}
       region: "us-east-2"
       key_file: "files/aws.pem"
+      wait: true
     register: win_pwd
 
   - name: Show the password
