@@ -14,7 +14,7 @@
       aws_secret_key: "{{ aws_secret_access_key }}"
 #      vpc_id: vpc-xxxxxxxx
 #      profile: "{{ aws_profile }}"
-      region: "us-east-2"
+      region: "{{ aws_region }}"
       rules:
       - proto: tcp
         ports:
@@ -30,7 +30,7 @@
       id: "{{ vm_name }}"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
-      region: "us-east-2"
+      region: "{{ aws_region }}"
       group: "mysecgrp"
       wait: true
       instance_tags:
@@ -48,8 +48,8 @@
       aws_secret_key: "{{ aws_secret_access_key }}"
 #      profile: my-boto-profile
       instance_id: "{{ ec2.instance_ids[0] }}"
-      region: "us-east-2"
-      key_data: "{{ ec2_private_key }}"
+      region: "{{ aws_region }}"
+      key_data: "{{ aws_private_key }}"
       wait: true
     register: win_pwd
 
