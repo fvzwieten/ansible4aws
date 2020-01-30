@@ -42,6 +42,10 @@
     debug:
       var: ec2
       
+  - name: dump the key
+    debug:
+      var: aws_private_key
+      
   - name: Get the Windows Password of the administrator
     ec2_win_password:
       aws_access_key: "{{ aws_access_key_id }}"
