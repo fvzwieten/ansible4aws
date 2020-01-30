@@ -4,6 +4,7 @@
 aws_access_key_id: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 aws_secret_access_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 aws_security_token: "{{ lookup('env','AWS_SECURITY_TOKEN') }}"
+aws_region: "us-east-2"
 aws_private_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           39316462656333616235313763626164616165333036393463363431396430363136333061646463
