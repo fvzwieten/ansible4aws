@@ -47,7 +47,7 @@
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
 #      profile: my-boto-profile
-      instance_id: {{ ec2.instance_id }}
+      instance_id: "{{ ec2.instance_id }}"
       region: "us-east-2"
       key_file: "files/aws.pem"
       wait: true
