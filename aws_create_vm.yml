@@ -8,6 +8,9 @@
   tasks:
   - name: create an ec2 key pair
     ec2_key:
+      aws_access_key: "{{ aws_access_key_id }}"
+      aws_secret_key: "{{ aws_secret_access_key }}"
+      region: "{{ aws_region }}"
       name: ansible
     register: ec2key
     
