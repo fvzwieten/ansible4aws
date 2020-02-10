@@ -22,7 +22,7 @@
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
       region: "{{ aws_region }}"
-      name: "ansible"
+      name: "{{ vm_name }}"
     register: ec2key
     
   - name: Set up Security Group
@@ -48,7 +48,7 @@
     ec2:
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-      key_name: "ansible"
+      key_name: "{{ vm_name }}"
       id: "{{ vm_name }}"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
@@ -75,14 +75,14 @@
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
       region: "{{ aws_region }}"
-      name: "ansible"
+      name: "{{ vm_name }}"
       state: absent
       
 - name: add ansible machine credential to instance
   hosts: "{{ ec2.instances[0].public_ip }}"
   gather_facts: no
   vars:
-    ansible_user: "ansible"
+    ansible_user: "Administrator"
     ansible_password: "{{ win_pwd.win_password }}"
     
   tasks:
