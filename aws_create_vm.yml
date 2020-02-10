@@ -51,6 +51,8 @@
       key_name: "{{ vm_name }}"
       id: "{{ vm_name }}"
       instance_type: t2.micro
+      instance_tags:
+      - role: "{{ role }}"
       image: "ami-0182e552fba672768"
       region: "{{ aws_region }}"
       group: "mysecgrp"
