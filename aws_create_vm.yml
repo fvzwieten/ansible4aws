@@ -58,7 +58,7 @@
       instance_tags:
         Name: "{{ vm_name }}"
       user_data: "{{ lookup('file', 'files/sysprep') }}"
-    register: ec2_instance
+    register: ec2
       
   - name: Get the Windows Password of the administrator
     ec2_win_password:
@@ -79,7 +79,7 @@
       state: absent
       
 - name: add ansible machine credential to instance
-  hosts: "{{ ec2_instance.public_ip }}"
+  hosts: "{{ ec2.instances[0].public_ip }}"
   gather_facts: no
   vars:
     ansible_user: "ansible"
