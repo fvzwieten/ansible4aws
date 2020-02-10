@@ -79,7 +79,14 @@
       region: "{{ aws_region }}"
       name: "{{ vm_name }}"
       state: absent
-      
+
+  # Example of a way to wait before a resource comes online. Can also work with files on a machine.
+  - name: Wait for the WinRM port to come online
+    wait_for:
+      port: 5986
+      host: "{{ ec2.instances[0].public_ip }}"
+      timeout: 600
+
   - name: add instance to inventory
     add_host:
       name: "{{ ec2.instances[0].public_ip }}"
@@ -100,13 +107,6 @@
     ansible_password: "{{ pwd }}"
 
   tasks:
-  # Example of a way to wait before a resource comes online. Can also work with files on a machine.
-  - name: Wait for the WinRM port to come online
-    wait_for:
-      port: 5986
-      host: "{{ public_ip }}"
-      timeout: 600
-
   - name: add windows admin account for ansible
     win_user:
       name: '{{ hostvars["instance"].admin_username }}'
