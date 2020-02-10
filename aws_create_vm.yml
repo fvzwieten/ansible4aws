@@ -53,7 +53,8 @@
 #      profile: my-boto-profile
       instance_id: "{{ ec2.instance_ids[0] }}"
       region: "{{ aws_region }}"
-      key_data: "{{ aws_private_key }}"
+#      key_data: "{{ aws_private_key }}"
+      key_file: "files/test.pem"
       wait: true
     register: win_pwd
 
