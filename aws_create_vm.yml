@@ -86,6 +86,7 @@
       port: 5986
       host: "{{ ec2.instances[0].public_ip }}"
       timeout: 600
+      delay: 60
 
   - name: add instance to inventory
     add_host:
