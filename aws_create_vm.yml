@@ -1,3 +1,14 @@
+---
+- name: Retrieve admin credentials for Windows
+  hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: add instance host with machine credential in inventory
+    add_host:
+      name: "instance"
+      admin_username: "{{ansible_user}}"
+      admin_password: "{{ansible_password}}"
+
 - name: aws_create_vm
   hosts: localhost
   connection: local
@@ -58,6 +69,14 @@
       key_data: "{{ ec2key.key.private_key }}"
       wait: true
     register: win_pwd
+
+  - name: add windows admin account for ansible
+    win_user:
+      name: '{{ hostvars["instance"].admin_username }}'
+      password: "{{ hostvars["instance"].admin_password }}"
+      state: present
+      groups:
+      - Administrators
 
   - name: delete the ec2 key pair
     ec2_key:
