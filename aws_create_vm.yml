@@ -80,12 +80,14 @@
       
   - name: add instance to inventory
     add_host:
-      name: "{{ vm_name }}"
+      name: "{{ ec2.instances[0].public_ip }}"
+      groups:
+      - just_created
       user: "Administrator"
       pwd: "{{ win_pwd.win_password }}"
       
 - name: add ansible machine credential to instance
-  hosts: "{{ vm_name }}"
+  hosts: just_created
   gather_facts: no
   vars:
     ansible_user: "{{ user }}"
