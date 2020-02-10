@@ -69,6 +69,7 @@
       region: "{{ aws_region }}"
       key_data: "{{ ec2key.key.private_key }}"
       wait: true
+      wait_timeout: 300
     register: win_pwd
 
   - name: delete the ec2 key pair
