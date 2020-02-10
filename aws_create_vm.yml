@@ -56,7 +56,7 @@
       group: "mysecgrp"
       wait: true
       instance_tags:
-        name: "{{ vm_name }}"
+        Name: "{{ vm_name }}"
         role: "{{ role }}"
       user_data: "{{ lookup('file', 'files/sysprep') }}"
     register: ec2
