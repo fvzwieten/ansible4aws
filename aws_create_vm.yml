@@ -58,7 +58,7 @@
       instance_tags:
         Name: "{{ vm_name }}"
       user_data: "{{ lookup('file', 'files/sysprep') }}"
-    register: ec2
+    register: ec2_instance
       
   - name: Get the Windows Password of the administrator
     ec2_win_password:
@@ -70,14 +70,6 @@
       wait: true
     register: win_pwd
 
-  - name: add windows admin account for ansible
-    win_user:
-      name: '{{ hostvars["instance"].admin_username }}'
-      password: '{{ hostvars["instance"].admin_password }}'
-      state: present
-      groups:
-      - Administrators
-
   - name: delete the ec2 key pair
     ec2_key:
       aws_access_key: "{{ aws_access_key_id }}"
@@ -85,3 +77,19 @@
       region: "{{ aws_region }}"
       name: "ansible"
       state: absent
+      
+- name: add ansible machine credential to instance
+  hosts: "{{ ec2_instance.public_ip }}"
+  gather_facts: no
+  vars:
+    ansible_user: "ansible"
+    ansible_password: "{{ win_pwd.win_password }}"
+    
+  tasks:
+  - name: add windows admin account for ansible
+    win_user:
+      name: '{{ hostvars["instance"].admin_username }}'
+      password: '{{ hostvars["instance"].admin_password }}'
+      state: present
+      groups:
+      - Administrators
