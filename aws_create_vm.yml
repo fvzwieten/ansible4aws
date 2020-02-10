@@ -11,7 +11,7 @@
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
       region: "{{ aws_region }}"
-      name: ansible
+      name: "ansible"
     register: ec2key
     
   - name: Set up Security Group
@@ -20,8 +20,6 @@
       description: sg with rule descriptions
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-#      vpc_id: vpc-xxxxxxxx
-#      profile: "{{ aws_profile }}"
       region: "{{ aws_region }}"
       rules:
       - proto: tcp
@@ -29,6 +27,11 @@
         - 5986
         cidr_ip: 0.0.0.0/0
         rule_desc: allow all on WinRM-HTTPS
+      - proto: tcp
+        ports:
+        - 3389
+        cidr_ip: 0.0.0.0/0
+        rule_desc: allow all on RDP
  
   - name: Provision an instance
     ec2:
@@ -46,22 +49,20 @@
       user_data: "{{ lookup('file', 'files/sysprep') }}"
     register: ec2
       
-  - name: dump the key
-    debug:
-      var: ec2key
-      
   - name: Get the Windows Password of the administrator
     ec2_win_password:
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-#      profile: my-boto-profile
       instance_id: "{{ ec2.instance_ids[0] }}"
       region: "{{ aws_region }}"
       key_data: "{{ ec2key.key.private_key }}"
-#      key_file: "files/test.pem"
       wait: true
     register: win_pwd
 
-  - name: Show the password
-    debug:
-      var: win_pwd
+  - name: delete the ec2 key pair
+    ec2_key:
+      aws_access_key: "{{ aws_access_key_id }}"
+      aws_secret_key: "{{ aws_secret_access_key }}"
+      region: "{{ aws_region }}"
+      name: "ansible"
+      state: absent
