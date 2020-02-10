@@ -78,12 +78,18 @@
       name: "{{ vm_name }}"
       state: absent
       
+  - name: add instance to inventory
+    add_host:
+      name: "{{ vm_name }}"
+      user: "Administrator"
+      pwd: "{{ win_pwd.win_password }}"
+      
 - name: add ansible machine credential to instance
-  hosts: "{{ ec2.instances[0].public_ip }}"
+  hosts: "{{ vm_name }}"
   gather_facts: no
   vars:
-    ansible_user: "Administrator"
-    ansible_password: "{{ win_pwd.win_password }}"
+    ansible_user: "{{ user }}"
+    ansible_password: "{{ pwd }}"
     
   tasks:
   - name: add windows admin account for ansible
