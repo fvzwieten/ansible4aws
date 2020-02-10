@@ -26,7 +26,7 @@
     ec2:
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-      key_name: "fred"
+      key_name: "test"
       id: "{{ vm_name }}"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
