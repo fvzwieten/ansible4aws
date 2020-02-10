@@ -51,14 +51,13 @@
       key_name: "{{ vm_name }}"
       id: "{{ vm_name }}"
       instance_type: t2.micro
-      instance_tags:
-      - role: "{{ role }}"
       image: "ami-0182e552fba672768"
       region: "{{ aws_region }}"
       group: "mysecgrp"
       wait: true
       instance_tags:
-        Name: "{{ vm_name }}"
+      - name: "{{ vm_name }}"
+      - role: "{{ role }}"
       user_data: "{{ lookup('file', 'files/sysprep') }}"
     register: ec2
       
