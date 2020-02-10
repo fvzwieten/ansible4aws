@@ -89,6 +89,8 @@
 - name: add ansible machine credential to instance
   hosts: just_created
   gather_facts: no
+  vars_files:
+  - files/winrm_vars
   vars:
     ansible_user: "{{ user }}"
     ansible_password: "{{ pwd }}"
