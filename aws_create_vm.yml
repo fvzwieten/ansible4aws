@@ -6,6 +6,11 @@
   - files/aws_vars
 
   tasks:
+  - name: create an ec2 key pair
+    ec2_key:
+      name: ansible
+    register: ec2key
+    
   - name: Set up Security Group
     ec2_group:
       name: "mysecgrp"
@@ -26,7 +31,7 @@
     ec2:
       aws_access_key: "{{ aws_access_key_id }}"
       aws_secret_key: "{{ aws_secret_access_key }}"
-      key_name: "test"
+      key_name: "ansible"
       id: "{{ vm_name }}"
       instance_type: t2.micro
       image: "ami-0182e552fba672768"
@@ -37,14 +42,10 @@
         Name: "{{ vm_name }}"
       user_data: "{{ lookup('file', 'files/sysprep') }}"
     register: ec2
-
-  - name: dump the return value
-    debug:
-      var: ec2
       
   - name: dump the key
     debug:
-      var: aws_private_key
+      var: ec2key
       
   - name: Get the Windows Password of the administrator
     ec2_win_password:
@@ -53,8 +54,8 @@
 #      profile: my-boto-profile
       instance_id: "{{ ec2.instance_ids[0] }}"
       region: "{{ aws_region }}"
-#      key_data: "{{ aws_private_key }}"
-      key_file: "files/test.pem"
+      key_data: "{{ ec2key.key.private_key }}"
+#      key_file: "files/test.pem"
       wait: true
     register: win_pwd
 
