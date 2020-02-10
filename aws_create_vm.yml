@@ -81,12 +81,14 @@
       
   - name: add instance to inventory
     add_host:
-      name: "{{ ec2.instances[0].public_ip }}"
+      name: "{{ vm_name }}"
       groups:
       - just_created
       user: "Administrator"
       pwd: "{{ win_pwd.win_password }}"
-      
+      public_ip: "{{ ec2.instances[0].public_ip }}"
+
+
 - name: add ansible machine credential to instance
   hosts: just_created
   gather_facts: no
@@ -95,8 +97,15 @@
   vars:
     ansible_user: "{{ user }}"
     ansible_password: "{{ pwd }}"
-    
+
   tasks:
+  # Example of a way to wait before a resource comes online. Can also work with files on a machine.
+  - name: Wait for the WinRM port to come online
+    wait_for:
+      port: 5986
+      host: "{{ public_ip }}"
+      timeout: 600
+
   - name: add windows admin account for ansible
     win_user:
       name: '{{ hostvars["instance"].admin_username }}'
@@ -104,3 +113,9 @@
       state: present
       groups:
       - Administrators
+
+  # Use a debug statement to report on stuff in the logging
+  - name: Report endpoints
+    debug:
+      msg: "VM name: {{ vm_name }} Role: {{ role }} Public IP: {{ public_ip }}"
+
