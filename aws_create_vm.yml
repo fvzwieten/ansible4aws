@@ -81,11 +81,11 @@
       state: absent
 
   # Example of a way to wait before a resource comes online. Can also work with files on a machine.
-  - name: Wait for the WinRM port to come online
-    wait_for:
-      port: 5986
-      host: "{{ ec2.instances[0].public_ip }}"
-      timeout: 600
+  #- name: Wait for the WinRM port to come online
+  #  wait_for:
+  #    port: 5986
+  #    host: "{{ ec2.instances[0].public_ip }}"
+  #    timeout: 600
       #delay: 60
 
   - name: add instance to inventory
@@ -109,11 +109,12 @@
 
   tasks:
   - name: make sure the instance is ready
-    win_ping:
-    register: ping_result
-    until: ping_result.msg.find("pong") != -1
-    retries: 10
-    delay: 20
+    wait_for_connection:
+    #win_ping:
+    #register: ping_result
+    #until: ping_result.msg.find("pong") != -1
+    #retries: 10
+    #delay: 20
 
   - name: add windows admin account for ansible
     win_user:
